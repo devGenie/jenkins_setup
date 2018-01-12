@@ -43,11 +43,26 @@ function install_jenkins(){
 
 }
 
-function setup_jenkins(){
+function configure_nginx(){
+    sudo cp jenkins_nginx_config /etc/nginx/sites-available/jenkins
+    sudo ln -s /etc/nginx/sites-available/jenkins /etc/nginx/sites-enabled/jenkins
+    sudo nginx -t && sudo service nginx restart     
+}
+
+function restart_services(){
+    sudo nginx -t && sudo service nginx restart
+    sudo service jenkins start
+    sudo service jenkins status
+}
+
+function main(){
     add_repository_keys
     update_system
     install_java
     install_jenkins
     install_docker
+    restart_services
 }
+
+main
 
