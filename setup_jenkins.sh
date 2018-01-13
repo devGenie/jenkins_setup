@@ -45,7 +45,7 @@ function install_jenkins(){
 
 function configure_nginx(){
     sudo apt-get install nginx -y
-    sudo cp /etc/nginx/sites-available/default /etc/nginx/sites-available/default-backup
+    sudo mv /etc/nginx/sites-available/default /etc/nginx/sites-available/default-backup
     sudo cp jenkins_nginx_config /etc/nginx/sites-available/default
     sudo ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
     sudo nginx -t && sudo service nginx restart     
