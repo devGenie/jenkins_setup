@@ -8,7 +8,7 @@ function update_system(){
     sudo apt-get update -y
     sudo apt-get upgrade -y
     sudo apt-get install language-pack-en-base -y
-    sudo dpkg-reconfigure locales
+    yes '' | sudo dpkg-reconfigure locales
     export LC_ALL=en_US.UTF-8
 }
 
@@ -20,7 +20,7 @@ function add_repository_keys(){
     sudo apt-get install software-properties-common
 
     #java keys
-    sudo add-apt-repository ppa:webupd8team/java
+    yes '' | sudo add-apt-repository ppa:webupd8team/java
     echo deb https://pkg.jenkins.io/debian-stable binary/ | sudo tee /etc/apt/sources.list.d/jenkins.list
 
     #docker keys
