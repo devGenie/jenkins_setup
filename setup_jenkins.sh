@@ -59,12 +59,11 @@ function configure_nginx(){
     sudo apt-get install nginx -y
     sudo mv /etc/nginx/sites-available/default /etc/nginx/sites-available/default-backup
     sudo cp jenkins_nginx_config /etc/nginx/sites-available/default
-    sudo ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
-    sudo nginx -t && sudo service nginx restart     
+    sudo ln -sfn /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default   
 }
 
 function restart_services(){
-    sudo nginx -t && sudo service nginx restart
+    sudo sudo service nginx restart
     sudo service jenkins start
     sudo service jenkins status
 }
