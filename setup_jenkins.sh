@@ -13,7 +13,7 @@ function update_system(){
 
     local_ip=$(curl http://169.254.169.254/latest/meta-data/local-ipv4)
     host_name=$(hostname)
-    sudo echo ${hostname} ${local_ip} >> /etc/hosts
+    sudo echo ${host_name} ${local_ip} >> /etc/hosts
 
 }
 
