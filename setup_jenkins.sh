@@ -10,6 +10,11 @@ function update_system(){
     sudo apt-get install language-pack-en-base -y
     sudo dpkg-reconfigure locales
     export LC_ALL=en_US.UTF-8
+
+    local_ip=$(curl http://169.254.169.254/latest/meta-data/local-ipv4)
+    host_name=$(hostname)
+    sudo echo ${hostname} ${local_ip} >> /etc/hosts
+
 }
 
 function add_repository_keys(){
@@ -55,6 +60,15 @@ function restart_services(){
     sudo nginx -t && sudo service nginx restart
     sudo service jenkins start
     sudo service jenkins status
+}
+
+function download_cli(){
+    wget http://localhost:8080/jenkins/jnlpJars/jenkins-cli.jar
+}
+
+function install_plugins(){
+    java -jar jenkins-cli.jar -s  http://localhost:8080/jenkins install-plugin \ 
+http://updates.jenkins-ci.org/latest/build-monitor-plugin.hpi  -restart
 }
 
 function main(){
