@@ -5,15 +5,20 @@ set -o pipefail
 set -o nounset
 
 function update_system(){
+    echo "________________________________________________________________________________"
+    echo "                              UPDATING SYSTEM                                    "
+    local_ip=$(curl http://169.254.169.254/latest/meta-data/local-ipv4)
+    host_name=$(hostname)
+    echo ${host_name} ${local_ip} | tee --append /etc/hosts
+    echo echo '${host_name} ${local_ip}'
+
     sudo apt-get update -y
     sudo apt-get upgrade -y
     sudo apt-get install language-pack-en-base -y
     sudo dpkg-reconfigure locales
     export LC_ALL=en_US.UTF-8
 
-    local_ip=$(curl http://169.254.169.254/latest/meta-data/local-ipv4)
-    host_name=$(hostname)
-    sudo echo ${host_name} ${local_ip} >> /etc/hosts
+    echo "________________________________________________________________________________"
 
 }
 
