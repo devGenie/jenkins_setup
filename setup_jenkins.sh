@@ -9,7 +9,7 @@ function update_system(){
     echo "                              UPDATING SYSTEM                                    "
     local_ip=$(curl http://169.254.169.254/latest/meta-data/local-ipv4)
     host_name=$(hostname)
-    echo ${host_name} ${local_ip} | tee --append /etc/hosts
+    echo '${local_ip} ${host_name}' | sudo tee --append /etc/hosts
     echo echo '${host_name} ${local_ip}'
 
     sudo apt-get update -y
