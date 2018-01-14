@@ -4,21 +4,23 @@ set -o errexit
 set -o pipefail
 set -o nounset
 
-function update_system(){
+function update_hosts(){
     echo "________________________________________________________________________________"
-    echo "                              UPDATING SYSTEM                                    "
+    echo "                              UPDATING HOSTS                                    "
+
     local_ip=$(curl http://169.254.169.254/latest/meta-data/local-ipv4)
     host_name=$(hostname)
-    echo '${local_ip} ${host_name}' | sudo tee --append /etc/hosts
-    echo echo '${host_name} ${local_ip}'
+    echo ${local_ip} ${host_name} | sudo tee --append /etc/hosts
+    echo '${host_name} ${local_ip}'
+    echo "________________________________________________________________________________"
+}
 
+function update_system(){
     sudo apt-get update -y
     sudo apt-get upgrade -y
     sudo apt-get install language-pack-en-base -y
     sudo dpkg-reconfigure locales
     export LC_ALL=en_US.UTF-8
-
-    echo "________________________________________________________________________________"
 
 }
 
@@ -77,6 +79,7 @@ http://updates.jenkins-ci.org/latest/build-monitor-plugin.hpi  -restart
 }
 
 function main(){
+    update_hosts
     add_repository_keys
     update_system
     install_java
