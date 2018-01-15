@@ -86,6 +86,10 @@ function main(){
     install_docker
     configure_nginx
     restart_services
+
+    password=$(sudo cat /var/lib/jenkins/secrets/initialAdminPassword)
+    echo "Jenkins server running successfully, use the passsword below to login as administrator"
+    echo "username: admin, password:${password}"
 }
 
 main
