@@ -47,12 +47,12 @@ function install_java(){
 
 function install_docker(){
     sudo apt-get install -y docker-ce
+    sudo usermod -aG docker jenkins
 }
 
 function install_jenkins(){
     sudo apt-get install jenkins -y
     sudo apt-get install git -y
-
 }
 
 function configure_nginx(){
@@ -90,6 +90,9 @@ function main(){
     password=$(sudo cat /var/lib/jenkins/secrets/initialAdminPassword)
     echo "Jenkins server running successfully, use the passsword below to login as administrator"
     echo "username: admin, password:${password}"
+    echo "---------------------- Rebooting machine----------------------------"
+
+    sudo reboot
 }
 
 main
